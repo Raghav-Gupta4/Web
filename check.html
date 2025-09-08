@@ -10,6 +10,8 @@
       
 const ws = new WebSocket('wss://366c7cb5c730.ngrok-free.app/client');
 
+await sleep 2000
+
 const data = { message: 'Hello from JS', time: Date.now() };
         ws.send(JSON.stringify(data));
 
