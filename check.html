@@ -6,45 +6,27 @@
 <body>
     <h1>Hello from JS</h1>
 
-    <!-- Link your external JS file -->
     <script>
       
 const ws = new WebSocket('wss://366c7cb5c730.ngrok-free.app/client');
 
 ws.addEventListener("open", () => {
-            console.log("Connected to Python WebSocket server");
-        });
-
-ws.addEventListener("message", (event) => {
-    try {
-        const data = JSON.parse(event.data);
-
-        // Print coordinates
-        if (data.latitude !== undefined && data.longitude !== undefined) {
-            console.log(`Latitude: ${data.latitude}, Longitude: ${data.longitude}`);
-        }
-
-        // Update speed display
-        if (data.speed !== undefined && data.speed !== null) {
-            const speed = Number(data.speed);
-            speedVal.textContent = isFinite(speed) ? speed.toFixed(0) : '--';
-            speedFabVal.textContent = isFinite(speed) ? `${speed.toFixed(0)} km/h` : '-- km/h';
-        }
-
-        // Update ETA display if available
-        if (data.eta !== undefined && data.eta !== null) {
-            etaVal.textContent = `${data.eta} min`;
-        }
-
-    } catch (err) {
-        console.error("Error parsing WebSocket message:", err);
-    }
+    console.log("Connected to WebSocket client endpoint");
 });
 
+ws.addEventListener("message", (event) => {
+    console.log("Coordinates received from server:", event.data);
+});
 
+ws.addEventListener("close", () => {
+    console.log("Disconnected from server");
+});
 
-      
-      
+ws.addEventListener("error", (err) => {
+    console.error("WebSocket error:", err);
+});
+
+ 
     </script>
 </body>
 </html>
